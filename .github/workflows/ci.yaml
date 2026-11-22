@@ -1,3 +1,12 @@
+# Optimized by ci-cost (https://github.com/mariotavarez/ci-cost)
+# Applied 5 optimizations:
+# - [MEDIUM] Add concurrency group to "ci.yaml"
+# - [LOW] Explicitly set fail-fast for large matrix job "unit-test" (5 combinations)
+# - [LOW] Explicitly set fail-fast for large matrix job "lowest" (5 combinations)
+# - [LOW] Explicitly set fail-fast for large matrix job "doctrine-migrations" (18 combinations)
+# - [LOW] Explicitly set fail-fast for large matrix job "mongodb" (15 combinations)
+# Estimated savings: ~10 min/run
+#
 name: Unit Tests
 
 on:
@@ -7,6 +16,10 @@ on:
       - 2.x
   pull_request: ~
 
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 
